@@ -1,0 +1,30 @@
+<footer class="footer on-dark">
+  <div class="container footer__inner">
+    <p class="footer__mark">Andrea Liu</p>
+
+    <ul class="footer__links">
+      @if (config.email) {
+        <li>
+          <a [href]="'mailto:' + config.email">{{ config.email }}</a>
+        </li>
+      }
+      @if (config.phone) {
+        <li>
+          <a [href]="'tel:' + config.phone">{{ config.phone }}</a>
+        </li>
+      }
+      @for (social of config.socials; track social.url) {
+        <li>
+          <a [href]="social.url" rel="me noopener" target="_blank">{{ social.label }}</a>
+        </li>
+      }
+    </ul>
+
+    <p class="footer__meta">
+      <span>© {{ year }} Andrea Liu</span>
+      @if (config.photoCredit) {
+        <span>Photography: {{ config.photoCredit }}</span>
+      }
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,129 @@
+/* Full-bleed dark hero.
+   Mobile  : subject centred by object-position 25% (Andrea's pick, variant D),
+             copy overlaid on a bottom scrim.
+   Desktop : copy on the right in the dark region, subject sitting left.
+   The photo is never zoomed past `cover`, so her head and the violin stay
+   whole at every breakpoint — the constraint Andrea set. */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100dvh;
+  padding-top: var(--nav-h);
+  overflow: hidden;
+  background: var(--dark); /* shows while the photo decodes; no white flash */
+  scroll-margin-top: 0;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__img {
+  object-fit: cover;
+  /* 25% horizontal keeps her face right-of-centre with breathing room to the
+     left on narrow screens; 22% vertical protects the top of her head. */
+  object-position: 25% 22%;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgb(18 16 14 / 92%) 0%,
+    rgb(18 16 14 / 70%) 28%,
+    rgb(18 16 14 / 10%) 62%,
+    rgb(18 16 14 / 0%) 100%
+  );
+}
+
+.hero__body {
+  position: relative;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: var(--space-5) var(--gutter) var(--space-6);
+  color: var(--on-dark);
+}
+
+.hero__role {
+  margin: 0 0 var(--space-1);
+  color: var(--on-dark-muted);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.hero__name {
+  font-size: var(--step-5);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+  margin-bottom: var(--space-2);
+}
+
+.hero__tagline {
+  max-width: 34ch;
+  margin-bottom: var(--space-4);
+  color: var(--on-dark-muted);
+  font-size: var(--step-1);
+  line-height: 1.55;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* --- Desktop: copy to the right, subject to the left ------------------- */
+
+@media (min-width: 900px) {
+  .hero {
+    align-items: center;
+  }
+
+  .hero__img {
+    /* Vertical-only crop at this ratio, so she stays left of centre while
+       the violin runs toward the right where the copy sits. */
+    object-position: 30% 28%;
+  }
+
+  /* Scrim flips from bottom-up to right-to-left: clear over her, dense
+     behind the text column. */
+  .hero__scrim {
+    background: linear-gradient(
+      to left,
+      rgb(18 16 14 / 90%) 0%,
+      rgb(18 16 14 / 82%) 30%,
+      rgb(18 16 14 / 45%) 52%,
+      rgb(18 16 14 / 8%) 74%,
+      rgb(18 16 14 / 0%) 100%
+    );
+  }
+
+  .hero__body {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 46%);
+    padding-block: var(--space-6);
+  }
+
+  .hero__inner,
+  .hero__body > * {
+    grid-column: 2;
+  }
+
+  .hero__tagline {
+    max-width: 30ch;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero__body {
+    grid-template-columns: 1fr minmax(0, 42%);
+  }
+}

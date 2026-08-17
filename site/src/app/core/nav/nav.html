@@ -1,0 +1,21 @@
+<header class="nav" [class.nav--solid]="solid()">
+  <div class="nav__inner">
+    <a class="nav__mark" href="#home">Andrea Liu</a>
+
+    <nav class="nav__nav" aria-label="Primary">
+      <ul class="nav__list">
+        @for (link of links; track link.id) {
+          <li>
+            <a
+              class="nav__link"
+              [class.nav__link--active]="isActive(link.id)"
+              [attr.aria-current]="isActive(link.id) ? 'location' : null"
+              [href]="'#' + link.id"
+              >{{ link.label }}</a
+            >
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,32 @@
+<section class="hero" id="home" aria-labelledby="hero-name">
+  <div class="hero__media">
+    <img
+      class="hero__img"
+      ngSrc="hero"
+      ngSrcset="1600w, 2400w, 3200w"
+      sizes="100vw"
+      fill
+      priority
+      [alt]="content.photoAlt"
+    />
+  </div>
+
+  <!-- Guarantees contrast for the light type regardless of what the photo
+       does behind it. Decorative, so hidden from assistive tech. -->
+  <div class="hero__scrim" aria-hidden="true"></div>
+
+  <div class="hero__body">
+    <p class="hero__role">{{ content.role }}</p>
+    <h1 class="hero__name" id="hero-name">{{ content.name }}</h1>
+    <p class="hero__tagline">{{ content.tagline }}</p>
+
+    <div class="hero__actions">
+      <a class="btn btn--primary" [href]="content.primaryCta.target">{{
+        content.primaryCta.label
+      }}</a>
+      <a class="btn btn--ghost" [href]="content.secondaryCta.target">{{
+        content.secondaryCta.label
+      }}</a>
+    </div>
+  </div>
+</section>

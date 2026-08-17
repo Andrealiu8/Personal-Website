@@ -1,0 +1,64 @@
+<section class="section videos" id="videos" aria-labelledby="videos-title">
+  <div class="container">
+    <div appReveal>
+      <p class="section__label">{{ content.label }}</p>
+      <h2 class="section__title" id="videos-title">{{ content.title }}</h2>
+      @if (content.intro) {
+        <p class="prose" [class.placeholder]="isPlaceholderText(content.intro)">
+          {{ content.intro }}
+        </p>
+      }
+    </div>
+
+    <ul class="videos__grid" appReveal>
+      @for (item of content.items; track $index) {
+        <li class="video">
+          <div class="video__frame">
+            @if (isPlaceholder(item)) {
+              <!-- Awaiting a YouTube id in videos.content.ts -->
+              <div class="video__empty">
+                <span class="video__empty-text">Video coming soon</span>
+              </div>
+            } @else if (isPlaying(item.youtubeId!)) {
+              <iframe
+                class="video__player"
+                [src]="embedUrl(item.youtubeId!)"
+                [title]="item.title"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                "
+                allowfullscreen
+              ></iframe>
+            } @else {
+              <!-- Click to load: nothing is fetched from YouTube until pressed. -->
+              <button class="video__play" type="button" (click)="play(item.youtubeId!)">
+                <img
+                  class="video__thumb"
+                  [src]="thumbnail(item.youtubeId!)"
+                  alt=""
+                  loading="lazy"
+                  width="480"
+                  height="360"
+                />
+                <span class="video__play-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Play {{ item.title }}</span>
+              </button>
+            }
+          </div>
+
+          <h3 class="video__title" [class.placeholder]="isPlaceholderText(item.title)">
+            {{ item.title }}
+          </h3>
+          <p class="video__detail" [class.placeholder]="isPlaceholderText(item.detail)">
+            {{ item.detail }}
+          </p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

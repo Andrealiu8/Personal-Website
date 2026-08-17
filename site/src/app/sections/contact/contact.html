@@ -1,0 +1,183 @@
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="container contact__grid">
+    <div class="contact__intro" appReveal>
+      <p class="section__label">{{ content.label }}</p>
+      <h2 class="section__title" id="contact-title">{{ content.title }}</h2>
+      <p class="prose">{{ content.intro }}</p>
+
+      <dl class="contact__details">
+        <dt>Email</dt>
+        <dd>
+          @if (config.email) {
+            <a [href]="'mailto:' + config.email">{{ config.email }}</a>
+          } @else {
+            <span class="placeholder">[Add your email address in contact.content.ts]</span>
+          }
+        </dd>
+
+        @if (config.phone) {
+          <dt>Phone</dt>
+          <dd>
+            <a [href]="'tel:' + config.phone">{{ config.phone }}</a>
+          </dd>
+        }
+
+        @if (config.socials.length) {
+          <dt>Elsewhere</dt>
+          <dd>
+            <ul class="contact__socials">
+              @for (social of config.socials; track social.url) {
+                <li>
+                  <a [href]="social.url" rel="me noopener" target="_blank">{{ social.label }}</a>
+                </li>
+              }
+            </ul>
+          </dd>
+        }
+      </dl>
+    </div>
+
+    <form class="contact__form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate appReveal>
+      <!-- Error summary: focused after a failed submit and linked to each
+           invalid field. Inline errors below remain as well. -->
+      <div
+        #summary
+        class="form__summary"
+        tabindex="-1"
+        role="alert"
+        [hidden]="errors().length === 0"
+      >
+        <p class="form__summary-title">
+          There {{ errors().length === 1 ? 'is' : 'are' }} {{ errors().length }}
+          {{ errors().length === 1 ? 'problem' : 'problems' }} with this form:
+        </p>
+        <ul>
+          @for (error of errors(); track error.control) {
+            <li>
+              <a [href]="'#field-' + error.control">{{ error.message }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="field-name">
+          Name <span class="field__req" aria-hidden="true">*</span>
+          <span class="visually-hidden">(required)</span>
+        </label>
+        <input
+          id="field-name"
+          class="field__input"
+          type="text"
+          formControlName="name"
+          autocomplete="name"
+          [attr.aria-invalid]="showError('name') ? 'true' : null"
+          [attr.aria-describedby]="showError('name') ? 'err-name' : null"
+        />
+        @if (showError('name')) {
+          <p class="field__error" id="err-name">{{ errorFor('name') }}</p>
+        }
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="field-email">
+          Email <span class="field__req" aria-hidden="true">*</span>
+          <span class="visually-hidden">(required)</span>
+        </label>
+        <input
+          id="field-email"
+          class="field__input"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          inputmode="email"
+          [attr.aria-invalid]="showError('email') ? 'true' : null"
+          [attr.aria-describedby]="showError('email') ? 'err-email' : null"
+        />
+        @if (showError('email')) {
+          <p class="field__error" id="err-email">{{ errorFor('email') }}</p>
+        }
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="field-inquiry">I'm writing about</label>
+        <select id="field-inquiry" class="field__input" formControlName="inquiryType">
+          @for (option of content.inquiryOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="field-date">
+          Event or start date <span class="field__hint">(optional)</span>
+        </label>
+        <input id="field-date" class="field__input" type="date" formControlName="eventDate" />
+        <p class="field__help" id="help-date">
+          If you have a wedding date or a month you'd like to start lessons, it helps to know.
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="field-message">
+          Message <span class="field__req" aria-hidden="true">*</span>
+          <span class="visually-hidden">(required)</span>
+        </label>
+        <textarea
+          id="field-message"
+          class="field__input field__input--area"
+          rows="5"
+          formControlName="message"
+          [attr.aria-invalid]="showError('message') ? 'true' : null"
+          [attr.aria-describedby]="showError('message') ? 'err-message' : null"
+        ></textarea>
+        @if (showError('message')) {
+          <p class="field__error" id="err-message">{{ errorFor('message') }}</p>
+        }
+      </div>
+
+      <!-- Honeypot: hidden from people, tempting to bots. Formspree treats a
+           filled _gotcha as spam. aria-hidden so it is never announced. -->
+      <div class="field field--trap" aria-hidden="true">
+        <label for="field-gotcha">Leave this field empty</label>
+        <input id="field-gotcha" type="text" formControlName="_gotcha" tabindex="-1" />
+      </div>
+
+      @if (!canSend()) {
+        <p class="form__notice">
+          <strong>Not connected yet.</strong> Add your Formspree id in
+          <code>contact.content.ts</code> to start receiving messages. Until then, please use the
+          email address
+          @if (config.email) {
+            <a [href]="'mailto:' + config.email">above</a>.
+          } @else {
+            above.
+          }
+        </p>
+      }
+
+      <button
+        class="btn btn--primary form__submit"
+        type="submit"
+        [disabled]="state() === 'sending'"
+      >
+        {{ state() === 'sending' ? 'Sending…' : 'Send message' }}
+      </button>
+
+      <!-- Status is announced without stealing focus. -->
+      <p class="form__status form__status--ok" role="status" [hidden]="state() !== 'sent'">
+        Thank you — your message is on its way. I'll reply as soon as I can.
+      </p>
+      <p class="form__status form__status--bad" role="alert" [hidden]="state() !== 'failed'">
+        Something went wrong sending that.
+        @if (config.email) {
+          Please email me directly at
+          <a [href]="'mailto:' + config.email">{{ config.email }}</a
+          >.
+        } @else {
+          Please try again in a moment.
+        }
+      </p>
+    </form>
+  </div>
+</section>

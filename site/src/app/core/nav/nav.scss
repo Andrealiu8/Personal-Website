@@ -1,0 +1,127 @@
+/* Fixed, centered and stacked: wordmark on line one, links on line two.
+   Transparent over the dark hero photo, solid cream once past it. Andrea
+   asked for either fully transparent or fully opaque — never a partial veil. */
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-nav);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+
+.nav__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: var(--nav-h);
+  justify-content: center;
+  padding-inline: var(--gutter);
+  padding-block: 0.75rem;
+}
+
+.nav__mark {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--on-dark);
+  transition: color var(--dur) var(--ease);
+}
+
+/* Wraps rather than overflowing: four uppercase labels with tracking are
+   wider than they look, and an overflowing bar widens the whole document,
+   which pushed the hero copy off-screen at 390px. */
+.nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem 0.625rem;
+  max-width: 100%;
+}
+
+.nav__link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.125rem;
+  color: var(--on-dark-muted);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur) var(--ease);
+}
+
+/* Active state is an underline plus a colour shift, so it does not rely on
+   colour alone to signal position. */
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0.25rem;
+  right: 0.25rem;
+  bottom: 0.25rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease);
+}
+
+.nav__link:hover,
+.nav__link--active {
+  color: var(--on-dark);
+}
+
+.nav__link--active::after,
+.nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+/* --- Solid state (scrolled past the hero) ------------------------------ */
+
+.nav--solid {
+  background: var(--bg);
+  border-bottom-color: var(--rule);
+}
+
+.nav--solid .nav__mark {
+  color: var(--ink);
+}
+
+.nav--solid .nav__link {
+  color: var(--muted);
+}
+
+.nav--solid .nav__link:hover,
+.nav--solid .nav__link--active {
+  color: var(--accent);
+}
+
+@media (min-width: 768px) {
+  .nav__inner {
+    gap: 0.5rem;
+  }
+
+  .nav__mark {
+    font-size: 1.25rem;
+  }
+
+  .nav__list {
+    gap: var(--space-3);
+  }
+
+  .nav__link {
+    padding-inline: 0.25rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.13em;
+  }
+}

@@ -1,0 +1,365 @@
+/* ==========================================================================
+   Andrea Liu — global tokens and base styles
+   Contrast ratios in comments were computed, not estimated. Do not change a
+   colour without re-checking its pair.
+   ========================================================================== */
+
+:root {
+  /* --- Light surface (the whole page below the hero) ------------------- */
+  --bg: #fbfaf8; /* warm off-white                                     */
+  --ink: #1a1714; /* body + headings      17.11:1 on --bg              */
+  --muted: #5f574f; /* captions, labels      6.79:1 on --bg              */
+  --accent: #7a2e3b; /* CTA, links, focus     8.82:1 on --bg              */
+  --accent-hover: #5e222d;
+  --on-accent: #ffffff; /*                       9.20:1 on --accent         */
+
+  /* Two separate border tokens on purpose: --rule is decorative only and
+     exempt from contrast rules; --field is a control boundary and must
+     clear 3:1 for WCAG non-text contrast. Never swap them. */
+  --rule: #e5e0d8; /* hairline dividers     1.26:1 — decorative ONLY   */
+  --field: #8a8074; /* input borders         3.71:1 on --bg  ✓          */
+
+  /* --- Dark surface (hero overlay + footer) --------------------------- */
+  --dark: #12100e;
+  --on-dark: #f7f5f2; /*                      17.6:1 on --dark            */
+  --on-dark-muted: #cdc6be; /*                      11.0:1 on --dark            */
+
+  /* --- Type ----------------------------------------------------------- */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  --step--1: 0.875rem; /* 14px — labels, captions   */
+  --step-0: 1rem; /* 16px — body floor         */
+  --step-1: 1.125rem;
+  --step-2: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --step-3: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --step-4: clamp(1.875rem, 1.5rem + 1.8vw, 2.75rem);
+  --step-5: clamp(2.5rem, 1.6rem + 4.2vw, 5rem);
+
+  /* --- Spacing: strict 8px rhythm ------------------------------------- */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --space-8: 8rem;
+
+  --measure: 68ch; /* keeps prose in the 60–75 char band */
+  --container: 1200px;
+  --gutter: var(--space-3);
+
+  /* Nav height drives scroll-margin-top so anchored headings are never
+     hidden behind the fixed bar (WCAG 2.2 focus-not-obscured). */
+  --nav-h: 5.25rem;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 240ms;
+
+  --z-nav: 100;
+  --z-skip: 200;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: var(--space-5);
+    --nav-h: 6rem;
+  }
+}
+
+/* --- Reset ------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.15;
+  text-wrap: balance; /* progressive; natural wrapping stays readable without it */
+}
+
+p {
+  margin: 0 0 var(--space-2);
+  text-wrap: pretty;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Long tokens (URLs, emails) reflow instead of overflowing. Deliberately
+   overflow-wrap, not word-break: break-all, which would mangle prose. */
+a,
+p,
+li {
+  overflow-wrap: anywhere;
+}
+
+/* --- Focus ------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.on-dark :focus-visible,
+.hero :focus-visible {
+  outline-color: var(--on-dark);
+}
+
+/* --- Layout helpers ---------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-6);
+  /* --nav-h is the bar's *minimum* height; its real height grows with the
+     wordmark and link type, measured at 103px against a 96px token. The extra
+     step guarantees an anchored heading is never tucked under the bar, which
+     would breach WCAG 2.2 focus-not-obscured, and it reads better besides. */
+  scroll-margin-top: calc(var(--nav-h) + var(--space-2));
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: var(--space-7);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding-block: var(--space-8);
+  }
+}
+
+.section__label {
+  margin: 0 0 var(--space-2);
+  color: var(--muted);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.section__title {
+  font-size: var(--step-4);
+  margin-bottom: var(--space-3);
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--rule);
+}
+
+/* Copy still awaiting Andrea's details. Global on purpose — Teaching,
+   Weddings, Videos and Contact all use it, and component-scoped styles would
+   not reach across them. Deliberately conspicuous so it cannot ship unnoticed,
+   while still meeting the 4.5:1 text requirement via --muted. */
+.placeholder {
+  display: block;
+  padding-left: var(--space-2);
+  border-left: 2px solid var(--field);
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* --- Buttons ----------------------------------------------------------- */
+/* min-height 48px satisfies the 44pt/48dp touch floor with room to spare. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 48px;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-size: var(--step-0);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn--primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--on-dark);
+  color: var(--on-dark);
+}
+
+.btn--ghost:hover {
+  background: var(--on-dark);
+  color: var(--dark);
+}
+
+.btn--outline {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn--outline:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* --- Accessibility utilities ------------------------------------------ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-1);
+  left: var(--space-1);
+  z-index: var(--z-skip);
+  padding: 0.75rem 1.25rem;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: 2px;
+  font-weight: 500;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 160ms var(--ease);
+}
+
+/* :focus, not :focus-visible — the link must appear for any focus, including
+   programmatic focus, where the browser's focus-visible heuristic may not
+   apply. A skip link that stays hidden while focused is a trap. */
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* --- Scroll reveal ----------------------------------------------------- */
+/* The class is added by appReveal once the element intersects. Content is
+   fully visible without JS: the hidden state only applies after the
+   directive marks the element as armed. */
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-reveal='armed'] {
+  opacity: 0;
+}
+
+[data-reveal='in'] {
+  animation: reveal-rise 700ms var(--ease) both;
+}
+
+/* --- Reduced motion ---------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal='armed'],
+  [data-reveal='in'] {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}

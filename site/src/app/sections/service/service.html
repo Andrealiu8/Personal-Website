@@ -1,0 +1,30 @@
+<section
+  class="section service"
+  [id]="content().id"
+  [attr.aria-labelledby]="content().id + '-title'"
+>
+  <div class="container">
+    <div class="service__head" appReveal>
+      <p class="section__label">{{ content().label }}</p>
+      <h2 class="section__title" [id]="content().id + '-title'">{{ content().title }}</h2>
+      <p class="service__intro prose" [class.placeholder]="isPlaceholder(content().intro)">
+        {{ content().intro }}
+      </p>
+    </div>
+
+    <ul class="service__points" appReveal>
+      @for (point of content().points; track point.title) {
+        <li class="point">
+          <h3 class="point__title">{{ point.title }}</h3>
+          <p class="point__body" [class.placeholder]="isPlaceholder(point.body)">
+            {{ point.body }}
+          </p>
+        </li>
+      }
+    </ul>
+
+    <p class="service__cta">
+      <a class="btn btn--outline" href="#contact" (click)="onEnquire()">{{ content().ctaLabel }}</a>
+    </p>
+  </div>
+</section>

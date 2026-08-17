@@ -1,0 +1,58 @@
+.service {
+  background: var(--bg);
+}
+
+/* Alternating sections get a hairline instead of a fill, so the page stays
+   light and airy rather than striped. */
+.service + .service {
+  padding-top: 0;
+}
+
+.service__intro {
+  margin-top: var(--space-1);
+  font-size: var(--step-1);
+  color: var(--ink);
+}
+
+.service__points {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.point__title {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.point__body {
+  margin: 0;
+  color: var(--muted);
+  max-width: 44ch;
+}
+
+.service__cta {
+  margin-top: var(--space-5);
+  margin-bottom: 0;
+}
+
+/* .placeholder lives in styles.scss: it is used by Videos and Contact too,
+   and component-scoped styles would not reach them. */
+
+@media (min-width: 768px) {
+  .service__points {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5) var(--space-4);
+  }
+}
+
+@media (min-width: 1024px) {
+  .service__points {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

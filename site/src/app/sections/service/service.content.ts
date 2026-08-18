@@ -31,19 +31,15 @@ export const TEACHING_CONTENT: ServiceContent = {
   points: [
     {
       title: 'Who I teach',
-      body: '[Which ages and levels you take — for example beginners through advanced, children, adults, or audition preparation.]',
+      body: 'Andrea teaches all levels. Beginner through advanced students are welcome',
     },
     {
       title: 'Where lessons happen',
-      body: '[Your studio location, whether you travel to students, and whether you offer online lessons.]',
+      body: 'In person in the Chicago area and online options',
     },
     {
       title: 'Lesson length & rates',
-      body: '[Lesson lengths you offer and your rates, or simply "Rates available on request" if you would rather discuss it directly.]',
-    },
-    {
-      title: 'What to bring',
-      body: '[Whether students need their own instrument, plus any books or materials you start with.]',
+      body: 'Rates available on request',
     },
   ],
   ctaLabel: 'Enquire about lessons',
@@ -62,19 +58,19 @@ export const WEDDINGS_CONTENT: ServiceContent = {
   points: [
     {
       title: 'Ensembles',
-      body: '[Which configurations you offer — solo violin, duo, trio, or string quartet — and how each suits different spaces.]',
+      body: 'Solo violin, duo, trio, or string quartet options available',
     },
     {
       title: 'Where I perform',
-      body: '[The area you cover and whether you travel further for an additional fee.]',
+      body: 'Greater Chicago Area',
     },
     {
       title: 'Repertoire',
-      body: '[A few sample pieces across classical, contemporary, and popular arrangements, and whether you take requests.]',
+      body: 'Andrea curates classical, contemporary, and pop arrangements tailored to the couples request',
     },
     {
       title: 'Booking & pricing',
-      body: '[How far ahead to book, what a booking includes, and your pricing or "Quotes on request".]',
+      body: 'Quotes on request',
     },
   ],
   ctaLabel: 'Enquire about your date',

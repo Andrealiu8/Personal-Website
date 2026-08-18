@@ -87,10 +87,17 @@
     align-items: center;
   }
 
+  /* The photo is 3:2, so at desktop ratios it fills the width and crops only
+     vertically — horizontal object-position has nothing left to move. To slide
+     the subject out from under the copy, the media box itself overhangs the
+     left edge with its right edge pinned to the viewport. Still `cover`, so
+     her head and the violin stay whole. */
+  .hero__media {
+    inset-inline-start: -12%;
+  }
+
   .hero__img {
-    /* Vertical-only crop at this ratio, so she stays left of centre while
-       the violin runs toward the right where the copy sits. */
-    object-position: 30% 28%;
+    object-position: 50% 26%;
   }
 
   /* Scrim flips from bottom-up to right-to-left: clear over her, dense

@@ -30,8 +30,13 @@
   color: var(--ink);
 }
 
+/* The hairline rule reads as the divider between points. It matches the one
+   `.placeholder` draws, so a point looks the same once real copy replaces the
+   bracketed text — the line belongs to the layout, not to being unwritten. */
 .point__body {
   margin: 0;
+  padding-left: var(--space-2);
+  border-left: 2px solid var(--field);
   color: var(--muted);
   max-width: 44ch;
 }

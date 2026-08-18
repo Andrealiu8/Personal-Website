@@ -27,11 +27,11 @@ export const TEACHING_CONTENT: ServiceContent = {
   label: 'Teaching',
   title: 'Violin Lessons',
   intro:
-    '[Add a short welcome here — two or three sentences on your teaching philosophy and what a student can expect from working with you.]',
+    'Drawing from years of performing, mentoring and pedagogy experience, Andrea works with students of all ages to build strong techique and artistry.',
   points: [
     {
       title: 'Who I teach',
-      body: 'Andrea teaches all levels. Beginner through advanced students are welcome',
+      body: 'Beginner through advanced students are welcome',
     },
     {
       title: 'Where lessons happen',
@@ -54,7 +54,7 @@ export const WEDDINGS_CONTENT: ServiceContent = {
   label: 'Weddings & Events',
   title: 'Live Music for Your Day',
   intro:
-    '[Add two or three sentences on what it is like to work with you — how you help couples choose music, and the atmosphere you bring to a ceremony or reception.]',
+    'Your love story deserves its own soundtrack.',
   points: [
     {
       title: 'Ensembles',

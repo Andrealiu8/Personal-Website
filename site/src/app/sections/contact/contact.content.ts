@@ -13,7 +13,7 @@ export const CONTACT_CONFIG = {
   formspreeId: null as string | null,
 
   /** Public email address. null hides the link and shows a placeholder. */
-  email: null as string | null,
+  email: 'Andrealiuviolin@gmail.com',
 
   /** Optional. null hides it entirely. */
   phone: null as string | null,

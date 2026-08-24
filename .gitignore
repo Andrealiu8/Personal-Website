@@ -4,3 +4,7 @@ dist/
 .angular/cache
 *.heic
 site/.vscode/
+# Raw source photos dropped at the repo root; only the resized derivatives
+# under site/public/img are tracked.
+/IMG_*.jpeg
+/IMG_*.jpg

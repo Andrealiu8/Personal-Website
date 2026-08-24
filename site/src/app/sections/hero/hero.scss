@@ -87,17 +87,37 @@
     align-items: center;
   }
 
-  /* The photo is 3:2, so at desktop ratios it fills the width and crops only
-     vertically — horizontal object-position has nothing left to move. To slide
-     the subject out from under the copy, the media box itself overhangs the
-     left edge with its right edge pinned to the viewport. Still `cover`, so
-     her head and the violin stay whole. */
+  /* The photo is 3:2 and desktop viewports are wider than that, so a full-bleed
+     media box has to crop vertically — which is what was slicing the top of her
+     head. Instead the media box stops short of the right edge: at that narrower
+     ratio `cover` scales to fit the height, so the frame keeps its full vertical
+     extent (whole head, whole violin) and crops only a sliver off the sides.
+     The band it leaves is flat --dark, which is where the copy sits, so nothing
+     lands on her. The mask dissolves the photo's right edge into that band. */
+  /* The box keeps its 74%-of-width and full-height size — that ratio is what
+     stops the vertical crop — and is simply translated: 5% off the left edge to
+     seat her further from the copy, 4% down to lift her head clear of the nav.
+     Both edges it exposes are masked into --dark, so neither reads as a seam. */
   .hero__media {
-    inset-inline-start: -12%;
+    inset-inline-start: -5%;
+    inset-inline-end: 31%;
+    inset-block-start: 4%;
+    inset-block-end: -4%;
+    /* The top fade is in px, not %, deliberately: her crown sits ~3% into the
+       frame, so a percentage fade deep enough to hide the edge would also make
+       the top of her hair translucent on a short viewport. 28px is under that
+       margin at every height, and the photo's top edge is near-black anyway. */
+    mask-image:
+      linear-gradient(to left, transparent 0%, #000 14%),
+      linear-gradient(to bottom, transparent 0, #000 28px);
+    mask-composite: intersect;
   }
 
+  /* Vertical stays near the top as insurance: on an unusually wide-and-short
+     window the box ratio passes 3:2 and vertical cropping resumes, and when it
+     does it must come off the bottom, not off her head. */
   .hero__img {
-    object-position: 50% 26%;
+    object-position: 40% 8%;
   }
 
   /* Scrim flips from bottom-up to right-to-left: clear over her, dense

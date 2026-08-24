@@ -154,3 +154,49 @@
     grid-template-columns: 1fr minmax(0, 42%);
   }
 }
+
+/* --- Alternate photo variant (temporary, /alt) -------------------------
+   Everything above frames the original shot, which centres her. The alternate
+   frame puts her at the left with the right two-thirds empty, so it needs
+   different crop anchors and much less scrim. Delete this block and the
+   `variant` input once a photo is chosen. */
+
+.hero--alt {
+  /* She sits at roughly 13-40% of this frame's width, so a narrow screen has
+     to look further left than the original does: 15% keeps her face and the
+     violin scroll inside the crop instead of slicing her cheek. */
+  .hero__img {
+    object-position: 15% 22%;
+  }
+}
+
+@media (min-width: 900px) {
+  .hero--alt {
+    /* Full bleed. The original needs its media box inset from the right to keep
+       the frame uncropped vertically; this frame already leaves its right side
+       empty, so the photo can fill the width and the copy lands in real
+       negative space. */
+    .hero__media {
+      inset-inline-end: 0;
+      mask-image: none;
+    }
+
+    .hero__img {
+      object-position: 50% 20%;
+    }
+
+    /* Measured: the backdrop behind the text column is near-black, so light
+       type clears 11:1 here unaided. The scrim is only insurance against an
+       extreme aspect ratio shifting the crop. */
+    .hero__scrim {
+      background: linear-gradient(
+        to left,
+        rgb(18 16 14 / 62%) 0%,
+        rgb(18 16 14 / 52%) 34%,
+        rgb(18 16 14 / 26%) 58%,
+        rgb(18 16 14 / 4%) 80%,
+        rgb(18 16 14 / 0%) 100%
+      );
+    }
+  }
+}

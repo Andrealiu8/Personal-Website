@@ -1,13 +1,13 @@
-<section class="hero" id="home" aria-labelledby="hero-name">
+<section class="hero" [class.hero--alt]="variant() === 'alt'" id="home" aria-labelledby="hero-name">
   <div class="hero__media">
     <img
       class="hero__img"
-      ngSrc="hero"
-      ngSrcset="1600w, 2400w, 3200w"
+      [ngSrc]="photo().src"
+      [ngSrcset]="photo().srcset"
       sizes="100vw"
       fill
       priority
-      [alt]="content.photoAlt"
+      [alt]="photo().alt"
     />
   </div>
 

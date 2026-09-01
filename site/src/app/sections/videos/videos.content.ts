@@ -19,8 +19,9 @@ export const VIDEOS_CONTENT = {
   title: 'Listen',
   intro: '[Add a sentence introducing your recordings, if you would like one.]',
   items: [
-    { title: '[Piece title]', detail: '[Composer · Venue · Year]', youtubeId: null },
-    { title: '[Piece title]', detail: '[Composer · Venue · Year]', youtubeId: null },
-    { title: '[Piece title]', detail: '[Composer · Venue · Year]', youtubeId: null },
+    { title: 'Otoño Porteño', detail: 'Astor Piazzolla', youtubeId: '5yaTREvV-Qc' },
+    { title: 'Invierno Porteño', detail: 'Astor Piazzolla', youtubeId: 'MueGWVANJp8' },
+    { title: 'Butterfly Lovers', detail: 'He Zhanhao', youtubeId: 'E3h3YwB05VU' },
+    { title: '[Piece title]', detail: '[Composer]', youtubeId: null },
   ] as readonly VideoItem[],
 } as const;

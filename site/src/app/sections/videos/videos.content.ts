@@ -17,11 +17,12 @@ export interface VideoItem {
 export const VIDEOS_CONTENT = {
   label: 'Videos',
   title: 'Listen',
-  intro: '[Add a sentence introducing your recordings, if you would like one.]',
+  /* Empty means no intro paragraph is rendered at all. Fill it in to add one. */
+  intro: '',
   items: [
     { title: 'Otoño Porteño', detail: 'Astor Piazzolla', youtubeId: '5yaTREvV-Qc' },
     { title: 'Invierno Porteño', detail: 'Astor Piazzolla', youtubeId: 'MueGWVANJp8' },
     { title: 'Butterfly Lovers', detail: 'He Zhanhao', youtubeId: 'E3h3YwB05VU' },
-    { title: '[Piece title]', detail: '[Composer]', youtubeId: null },
+    { title: 'Tzigane', detail: 'Maurice Ravel', youtubeId: 'Hjq2Qi1EFSo' },
   ] as readonly VideoItem[],
 } as const;

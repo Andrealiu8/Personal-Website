@@ -10,7 +10,7 @@ export const CONTACT_CONFIG = {
    * While this is null the form stays disabled and the page shows the email
    * link instead, so nobody can submit into a void.
    */
-  formspreeId: null as string | null,
+  formspreeId: 'xrpgloqp',
 
   /** Public email address. null hides the link and shows a placeholder. */
   email: 'Andrealiuviolin@gmail.com',

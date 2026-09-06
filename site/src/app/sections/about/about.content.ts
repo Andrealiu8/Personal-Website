@@ -11,6 +11,8 @@ export const ABOUT_CONTENT = {
     'Earlier in her career, Andrea spent eight years with the Denver Young Artist Orchestra, holding positions from Principal Second to Concertmaster, and performed at Carnegie Hall as a member of that ensemble.',
     'Andrea now perfoms as a freelance musician in Chicago with the Northwestern Medical Orchestra and Lakeview Orchestra along with maintaining a private teaching studio while pursuing a career in biotech.',
   ],
+  photoAlt:
+    'Andrea Liu holding her violin upright by the neck, looking towards the camera, photographed against a dark background.',
   /** Pulled out of the bio so the highlights are scannable. */
   highlights: [
     { value: 'Northwestern University', detail: 'Violin Performance & Biological Sciences' },

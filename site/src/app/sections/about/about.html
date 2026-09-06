@@ -5,6 +5,20 @@
       <h2 class="section__title" id="about-title">{{ content.title }}</h2>
     </div>
 
+    <!-- Second in source order so the portrait lands between the title and the
+         bio on a phone, where the grid collapses to one column. -->
+    <div class="about__portrait" appReveal>
+      <img
+        class="about__img"
+        ngSrc="about-portrait"
+        ngSrcset="600w, 900w, 1200w"
+        sizes="(min-width: 768px) 34vw, 18rem"
+        width="2800"
+        height="4200"
+        [alt]="content.photoAlt"
+      />
+    </div>
+
     <div class="about__body" appReveal>
       @for (paragraph of content.paragraphs; track $index) {
         <p>{{ paragraph }}</p>

@@ -8,6 +8,22 @@
   color: var(--ink);
 }
 
+/* Capped on a phone so a 2:3 portrait at full gutter-to-gutter width doesn't
+   push the bio a screen and a half down the page. */
+.about__portrait {
+  max-width: 18rem;
+  margin-block: var(--space-1) var(--space-2);
+}
+
+.about__img {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  /* Matches the photo's own background, so the box reads as the finished frame
+     while the JPEG decodes rather than flashing the page's off-white. */
+  background: var(--dark);
+}
+
 .about__body p {
   margin-bottom: var(--space-3);
 }
@@ -35,15 +51,36 @@
 }
 
 @media (min-width: 768px) {
+  /* Copy stacks in the wide left column, portrait sits in the narrow right one
+     starting at the *body* row, so its top edge lines up with the first line of
+     the bio and the title has clear space beside it. Dropping it a row rather
+     than nudging it with a margin keeps that alignment true when the title
+     wraps at narrower desktop widths.
+     The head is no longer sticky: it now sits directly above the prose it
+     titles, so pinning it would just leave a hole in the reading column. */
   .about__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr);
-    gap: var(--space-5);
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'head .'
+      'body portrait';
+    column-gap: var(--space-5);
+    row-gap: var(--space-3);
+    align-items: start;
   }
 
   .about__head {
-    position: sticky;
-    top: calc(var(--nav-h) + var(--space-3));
-    align-self: start;
+    grid-area: head;
+  }
+
+  .about__body {
+    grid-area: body;
+  }
+
+  .about__portrait {
+    grid-area: portrait;
+    max-width: none;
+    margin-block: 0;
   }
 
   .about__highlights {

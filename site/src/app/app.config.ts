@@ -5,8 +5,17 @@ import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 
-/** Widths actually present on disk in public/img. */
-const AVAILABLE_WIDTHS = [1600, 2400, 3200] as const;
+/**
+ * Widths actually present on disk in public/img, ascending, per logical name.
+ * Per-image rather than one shared list because the two images are asked for
+ * at very different sizes: the hero is full-bleed, the about portrait never
+ * exceeds a ~400px column, so shipping it at hero widths would be waste.
+ * Add a key here whenever you add a new set of derivatives.
+ */
+const AVAILABLE_WIDTHS: Record<string, readonly number[]> = {
+  hero: [1600, 2400, 3200],
+  'about-portrait': [600, 900, 1200],
+};
 
 /**
  * Maps a logical name plus a requested width onto the real file we generated
@@ -18,9 +27,20 @@ const AVAILABLE_WIDTHS = [1600, 2400, 3200] as const;
  * host-agnostic while the GitHub Pages base-href is still undecided.
  */
 export function localImageLoader(config: ImageLoaderConfig): string {
-  const requested = config.width ?? 2400;
-  const width =
-    AVAILABLE_WIDTHS.find((w) => w >= requested) ?? AVAILABLE_WIDTHS[AVAILABLE_WIDTHS.length - 1];
+  const widths = AVAILABLE_WIDTHS[config.src];
+  if (!widths) {
+    throw new Error(
+      `No derivative widths registered for image '${config.src}'. ` +
+        `Generate them into public/img and add the name to AVAILABLE_WIDTHS.`,
+    );
+  }
+
+  const largest = widths[widths.length - 1];
+  // No width means NgOptimizedImage is filling the plain `src`, which every
+  // browser then overrides from the srcset — serve the largest so the fallback
+  // is never the blurry one.
+  const requested = config.width ?? largest;
+  const width = widths.find((w) => w >= requested) ?? largest;
   return `img/${config.src}-${width}.jpg`;
 }
 

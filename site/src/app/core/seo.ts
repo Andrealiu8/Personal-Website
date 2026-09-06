@@ -7,10 +7,12 @@ import { Meta, Title } from '@angular/platform-browser';
  * prerendering, so all of this lands in the static HTML where crawlers see it
  * without executing JavaScript.
  *
- * SITE_URL must be updated once the domain is decided — Open Graph requires
- * absolute URLs, so relative paths will not work for link previews.
+ * SITE_URL is the deployed origin *including* the project-site subpath, because
+ * Open Graph requires absolute URLs — relative paths will not work for link
+ * previews. Change it here, in public/robots.txt, and in public/sitemap.xml if
+ * the site ever moves to a custom domain.
  */
-const SITE_URL = 'https://example.com'; // TODO: replace with the real domain
+const SITE_URL = 'https://andrealiu8.github.io/Personal-Website';
 
 const DESCRIPTION =
   'Violinist Andrea Liu, a Northwestern University graduate, offers private violin lessons and live music for weddings and events.';

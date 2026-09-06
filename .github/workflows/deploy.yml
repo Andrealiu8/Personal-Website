@@ -1,0 +1,64 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Every push to main publishes the site.
+  push:
+    branches: [main]
+  # Lets you re-run a deploy from the Actions tab without pushing a commit.
+  workflow_dispatch:
+
+# The base href baked into the build must match the path the site is served
+# from. For a project site that is the repository name; switch this to "/" if a
+# custom domain is ever added (and add a CNAME file in site/public/).
+env:
+  BASE_HREF: /Personal-Website/
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a newer push cancel an in-flight deploy rather than queueing behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build -- --base-href=$BASE_HREF
+
+      # GitHub Pages has no server-side routing: a request for a path it has no
+      # file for returns 404.html. Serving the prerendered index there keeps
+      # deep links working instead of showing GitHub's error page.
+      - name: Add 404 fallback
+        run: cp dist/site/browser/index.html dist/site/browser/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist/site/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

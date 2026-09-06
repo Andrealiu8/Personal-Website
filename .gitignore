@@ -8,3 +8,7 @@ site/.vscode/
 # under site/public/img are tracked.
 /IMG_*.jpeg
 /IMG_*.jpg
+
+# Vendored Claude Code skill packs. Third-party tooling, unrelated to the
+# site, and they were 72% of the tracked files.
+.claude/skills/
